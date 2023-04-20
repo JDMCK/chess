@@ -1,0 +1,111 @@
+:root {
+  --dark: rgb(101, 143, 106);
+  --light: rgb(255, 249, 226);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+#board {
+  display: grid;
+  grid-template-columns: repeat(8, 100px);
+  grid-template-rows: repeat(8, 100px);
+  border: 1px solid black;
+}
+
+.square {
+  font-size: 50pt;
+  text-align: center;
+  width: 100px;
+  height: 100px;
+  cursor: default;
+}
+
+.dark {
+  background-color: var(--dark);
+}
+
+.light {
+  background-color: var(--light);
+}
+
+.highlight.dark {
+  background-color: rgb(161, 179, 0);
+}
+
+.highlight.light {
+  background-color: yellow;
+}
+
+.r1 {
+  grid-row: 1;
+}
+
+.r2 {
+  grid-row: 2;
+}
+
+.r3 {
+  grid-row: 3;
+}
+
+.r4 {
+  grid-row: 4;
+}
+
+.r5 {
+  grid-row: 5;
+}
+
+.r6 {
+  grid-row: 6;
+}
+
+.r7 {
+  grid-row: 7;
+}
+
+.r8 {
+  grid-row: 8;
+}
+
+.c1 {
+  grid-column: 1;
+}
+
+.c2 {
+  grid-column: 2;
+}
+
+.c3 {
+  grid-column: 3;
+}
+
+.c4 {
+  grid-column: 4;
+}
+
+.c5 {
+  grid-column: 5;
+}
+
+.c6 {
+  grid-column: 6;
+}
+
+.c7 {
+  grid-column: 7;
+}
+
+.c8 {
+  grid-column: 8;
+}
