@@ -4,12 +4,17 @@ import handleShowMoves from "./handlers/handleShowMoves";
 
 const Board = ({ board: BOARD }) => {
 
+  // Keeps track of all boards
   const [boardHistory, setBoardHistory] = useState([BOARD]);
+  // Current board (if move is made when in the past, future is overwritten)
   const [historyIndex, setHistoryIndex] = useState(0);
 
   const [selectedPiece, setSelectedPiece] = useState({});
   const [isHighlighted, setIsHighlighted] = useState([]);
   const [isWhiteToMove, setIsWhiteToMove] = useState(true);
+
+  const [isFlipLock, setIsFlipLock] = useState(true);
+  const [flipBoard, setFlipBoard] = useState(false);
 
   const handleMove = (from, to) => {
     // Slices future boards (if any)
@@ -34,7 +39,12 @@ const Board = ({ board: BOARD }) => {
 
   useEffect(() => {
     setIsWhiteToMove(historyIndex % 2 === 0);
-  }, [historyIndex])
+    handleFlipBoard();
+  }, [historyIndex, isFlipLock]);
+
+  const handleFlipBoard = () => {
+    if (!isFlipLock) setFlipBoard(!isWhiteToMove);
+  }
 
   const handleUndo = () => {
     setHistoryIndex(previousIndex => previousIndex > 0 ? previousIndex - 1 : previousIndex);
@@ -49,7 +59,7 @@ const Board = ({ board: BOARD }) => {
       {boardHistory[historyIndex].map((row, y) => row.map((piece, x) =>
         <Square
           key={x + y * 8}
-          className={`square r${y + 1} c${x + 1} ${(x + y) % 2 === 0 ? 'dark' : 'light'}`}
+          className={`square r${y + 1} c${x + 1} ${(x + y) % 2 === 0 ? 'dark' : 'light'} ${flipBoard ? 'flip' : ''}`}
           coordinate={{ x, y }}
           piece={piece}
           handleShowMoves={() => handleShowMoves({ x, y }, boardHistory[historyIndex], isWhiteToMove, setIsHighlighted, setSelectedPiece)}
@@ -59,6 +69,7 @@ const Board = ({ board: BOARD }) => {
       <p>{isWhiteToMove ? 'White' : 'Black'} to move</p>
       <button onClick={handleUndo}>Back</button>
       <button onClick={handleRedo}>Forward</button>
+      <button onClick={() => setIsFlipLock(previous => !previous)}>Flip Lock</button>
     </div>
   );
 }

@@ -8,6 +8,8 @@ const isOk = (board, x, y) => {
 const showMoves = (coordinate, board, isWhiteToMove, setIsHighlighted, setSelectedPiece) => {
 
   const piece = board[coordinate.y][coordinate.x];
+  if (piece === 'x') setIsHighlighted([]);
+
   const isWhite = piece === piece.toLowerCase();
   setSelectedPiece(coordinate);
 

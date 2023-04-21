@@ -50,32 +50,64 @@ body {
   grid-row: 1;
 }
 
+.r1.flip {
+  grid-row: 8;
+}
+
 .r2 {
   grid-row: 2;
+}
+
+.r2.flip {
+  grid-row: 7;
 }
 
 .r3 {
   grid-row: 3;
 }
 
+.r3.flip {
+  grid-row: 6;
+}
+
 .r4 {
   grid-row: 4;
+}
+
+.r4.flip {
+  grid-row: 5;
 }
 
 .r5 {
   grid-row: 5;
 }
 
+.r5.flip {
+  grid-row: 4;
+}
+
 .r6 {
   grid-row: 6;
+}
+
+.r6.flip {
+  grid-row: 3;
 }
 
 .r7 {
   grid-row: 7;
 }
 
+.r7.flip {
+  grid-row: 2;
+}
+
 .r8 {
   grid-row: 8;
+}
+
+.r8.flip {
+  grid-row: 1;
 }
 
 .c1 {
