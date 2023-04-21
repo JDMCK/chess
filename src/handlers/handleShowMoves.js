@@ -36,24 +36,32 @@ const showMoves = (coordinate, board, isWhiteToMove, setIsHighlighted, setSelect
   }
 }
 
-const kingMoves = (coordinate, board, isWhite, isWhiteToMove) => {
+const kingMoves = ({ x, y }, board, isWhite, isWhiteToMove) => {
   let squaresToHighlight = [];
   if (isWhite && isWhiteToMove) {
-
+    for (let i = -1; i < 2; i++) {
+      for (let j = -1; j < 2; j++) {
+        if (isOk(board, x + j, y + i)) {
+          if (board[y + i][x + j] === 'x' || BLACK.includes(board[y + i][x + j])) squaresToHighlight.push({ x: x + j, y: y + i });
+        }
+      }
+    }
   } else if (!isWhite && !isWhiteToMove) {
-
+    for (let i = -1; i < 2; i++) {
+      for (let j = -1; j < 2; j++) {
+        if (isOk(board, x + j, y + i)) {
+          if (board[y + i][x + j] === 'x' || WHITE.includes(board[y + i][x + j])) squaresToHighlight.push({ x: x + j, y: y + i });
+        }
+      }
+    }
   }
   return squaresToHighlight;
 }
 
 const queenMoves = (coordinate, board, isWhite, isWhiteToMove) => {
-  let squaresToHighlight = [];
-  if (isWhite && isWhiteToMove) {
-
-  } else if (!isWhite && !isWhiteToMove) {
-
-  }
-  return squaresToHighlight;
+  return rookMoves(coordinate, board, isWhite, isWhiteToMove).concat(
+    bishopMoves(coordinate, board, isWhite, isWhiteToMove)
+  )
 }
 
 const rookMoves = ({ x, y }, board, isWhite, isWhiteToMove) => {
@@ -137,22 +145,167 @@ const rookMoves = ({ x, y }, board, isWhite, isWhiteToMove) => {
   return squaresToHighlight;
 }
 
-const bishopMoves = (coordinate, board, isWhite, isWhiteToMove) => {
+const bishopMoves = ({ x, y }, board, isWhite, isWhiteToMove) => {
   let squaresToHighlight = [];
   if (isWhite && isWhiteToMove) {
-
+    for (let i = 1; i < 8; i++) {
+      if (isOk(board, x + i, y + i)) {
+        if (board[y + i][x + i] === 'x') squaresToHighlight.push({ x: x + i, y: y + i });
+        if (BLACK.includes(board[y + i][x + i])) {
+          squaresToHighlight.push({ x: x + i, y: y + i });
+          break;
+        }
+        if (WHITE.includes(board[y + i][x + i])) break;
+      }
+    }
+    for (let i = 1; i < 8; i++) {
+      if (isOk(board, x - i, y + i)) {
+        if (board[y + i][x - i] === 'x') squaresToHighlight.push({ x: x - i, y: y + i });
+        if (BLACK.includes(board[y + i][x - i])) {
+          squaresToHighlight.push({ x: x - i, y: y + i });
+          break;
+        }
+        if (WHITE.includes(board[y + i][x - i])) break;
+      }
+    }
+    for (let i = 1; i < 8; i++) {
+      if (isOk(board, x - i, y - i)) {
+        if (board[y - i][x - i] === 'x') squaresToHighlight.push({ x: x - i, y: y - i });
+        if (BLACK.includes(board[y - i][x - i])) {
+          squaresToHighlight.push({ x: x - i, y: y - i });
+          break;
+        }
+        if (WHITE.includes(board[y - i][x - i])) break;
+      }
+    }
+    for (let i = 1; i < 8; i++) {
+      if (isOk(board, x + i, y - i)) {
+        if (board[y - i][x + i] === 'x') squaresToHighlight.push({ x: x + i, y: y - i });
+        if (BLACK.includes(board[y - i][x + i])) {
+          squaresToHighlight.push({ x: x + i, y: y - i });
+          break;
+        }
+        if (WHITE.includes(board[y - i][x + i])) break;
+      }
+    }
   } else if (!isWhite && !isWhiteToMove) {
-
+    for (let i = 1; i < 8; i++) {
+      if (isOk(board, x + i, y + i)) {
+        if (board[y + i][x + i] === 'x') squaresToHighlight.push({ x: x + i, y: y + i });
+        if (WHITE.includes(board[y + i][x + i])) {
+          squaresToHighlight.push({ x: x + i, y: y + i });
+          break;
+        }
+        if (BLACK.includes(board[y + i][x + i])) break;
+      }
+    }
+    for (let i = 1; i < 8; i++) {
+      if (isOk(board, x - i, y + i)) {
+        if (board[y + i][x - i] === 'x') squaresToHighlight.push({ x: x - i, y: y + i });
+        if (WHITE.includes(board[y + i][x - i])) {
+          squaresToHighlight.push({ x: x - i, y: y + i });
+          break;
+        }
+        if (BLACK.includes(board[y + i][x - i])) break;
+      }
+    }
+    for (let i = 1; i < 8; i++) {
+      if (isOk(board, x - i, y - i)) {
+        if (board[y - i][x - i] === 'x') squaresToHighlight.push({ x: x - i, y: y - i });
+        if (WHITE.includes(board[y - i][x - i])) {
+          squaresToHighlight.push({ x: x - i, y: y - i });
+          break;
+        }
+        if (BLACK.includes(board[y - i][x - i])) break;
+      }
+    }
+    for (let i = 1; i < 8; i++) {
+      if (isOk(board, x + i, y - i)) {
+        if (board[y - i][x + i] === 'x') squaresToHighlight.push({ x: x + i, y: y - i });
+        if (WHITE.includes(board[y - i][x + i])) {
+          squaresToHighlight.push({ x: x + i, y: y - i });
+          break;
+        }
+        if (BLACK.includes(board[y - i][x + i])) break;
+      }
+    }
   }
   return squaresToHighlight;
 }
 
-const knightMoves = (coordinate, board, isWhite, isWhiteToMove) => {
+const knightMoves = ({ x, y }, board, isWhite, isWhiteToMove) => {
   let squaresToHighlight = [];
+  let spot;
   if (isWhite && isWhiteToMove) {
-
+    // Horizontal
+    if (isOk(board, x + 2, y + 1)) {
+      spot = board[y + 1][x + 2];
+      if (spot === 'x' || BLACK.includes(spot)) squaresToHighlight.push({ x: x + 2, y: y + 1 });
+    }
+    if (isOk(board, x - 2, y + 1)) {
+      spot = board[y + 1][x - 2];
+      if (spot === 'x' || BLACK.includes(spot)) squaresToHighlight.push({ x: x - 2, y: y + 1 });
+    }
+    if (isOk(board, x - 2, y - 1)) {
+      spot = board[y - 1][x - 2];
+      if (spot === 'x' || BLACK.includes(spot)) squaresToHighlight.push({ x: x - 2, y: y - 1 });
+    }
+    if (isOk(board, x + 2, y - 1)) {
+      spot = board[y - 1][x - 2];
+      if (spot === 'x' || BLACK.includes(spot)) squaresToHighlight.push({ x: x + 2, y: y - 1 });
+    }
+    // Vertical
+    if (isOk(board, x + 1, y + 2)) {
+      spot = board[y + 2][x + 1];
+      if (spot === 'x' || BLACK.includes(spot)) squaresToHighlight.push({ x: x + 1, y: y + 2 });
+    }
+    if (isOk(board, x - 1, y + 2)) {
+      spot = board[y + 2][x - 1];
+      if (spot === 'x' || BLACK.includes(spot)) squaresToHighlight.push({ x: x - 1, y: y + 2 });
+    }
+    if (isOk(board, x - 1, y - 2)) {
+      spot = board[y - 2][x - 1];
+      if (spot === 'x' || BLACK.includes(spot)) squaresToHighlight.push({ x: x - 1, y: y - 2 });
+    }
+    if (isOk(board, x + 1, y - 2)) {
+      spot = board[y - 2][x + 1];
+      if (spot === 'x' || BLACK.includes(spot)) squaresToHighlight.push({ x: x + 1, y: y - 2 });
+    }
   } else if (!isWhite && !isWhiteToMove) {
-
+    // Horizontal
+    if (isOk(board, x + 2, y + 1)) {
+      spot = board[y + 1][x + 2];
+      if (spot === 'x' || WHITE.includes(spot)) squaresToHighlight.push({ x: x + 2, y: y + 1 });
+    }
+    if (isOk(board, x - 2, y + 1)) {
+      spot = board[y + 1][x - 2];
+      if (spot === 'x' || WHITE.includes(spot)) squaresToHighlight.push({ x: x - 2, y: y + 1 });
+    }
+    if (isOk(board, x - 2, y - 1)) {
+      spot = board[y - 1][x - 2];
+      if (spot === 'x' || WHITE.includes(spot)) squaresToHighlight.push({ x: x - 2, y: y - 1 });
+    }
+    if (isOk(board, x + 2, y - 1)) {
+      spot = board[y - 1][x - 2];
+      if (spot === 'x' || WHITE.includes(spot)) squaresToHighlight.push({ x: x + 2, y: y - 1 });
+    }
+    // Vertical
+    if (isOk(board, x + 1, y + 2)) {
+      spot = board[y + 2][x + 1];
+      if (spot === 'x' || WHITE.includes(spot)) squaresToHighlight.push({ x: x + 1, y: y + 2 });
+    }
+    if (isOk(board, x - 1, y + 2)) {
+      spot = board[y + 2][x - 1];
+      if (spot === 'x' || WHITE.includes(spot)) squaresToHighlight.push({ x: x - 1, y: y + 2 });
+    }
+    if (isOk(board, x - 1, y - 2)) {
+      spot = board[y - 2][x - 1];
+      if (spot === 'x' || WHITE.includes(spot)) squaresToHighlight.push({ x: x - 1, y: y - 2 });
+    }
+    if (isOk(board, x + 1, y - 2)) {
+      spot = board[y - 2][x + 1];
+      if (spot === 'x' || WHITE.includes(spot)) squaresToHighlight.push({ x: x + 1, y: y - 2 });
+    }
   }
   return squaresToHighlight;
 }

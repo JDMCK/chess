@@ -32,6 +32,7 @@ const Board = ({ board: BOARD }) => {
           isHighlighted={isHighlighted?.some((coordinate) => coordinate.x === x && coordinate.y === y)} />
       ))}
       <p>{isWhiteToMove ? 'White' : 'Black'} to move</p>
+      <button onClick={() => console.log('nope lol')}>UNDO</button>
     </div>
   );
 }
